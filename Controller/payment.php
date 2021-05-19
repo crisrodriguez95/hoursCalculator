@@ -5,7 +5,7 @@ class payment
 
     public function getPayment()
     {
-        $file = 'horario.txt';
+        $file = 'schedule.txt';
         if (is_file($file)) {
             if (($fp = fopen($file, "r")) !== FALSE) {
 
