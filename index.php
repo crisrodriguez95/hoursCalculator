@@ -1,5 +1,5 @@
 <?php
-include('./Controller/payment.php');
+require('./Controller/payment.php');
 
 $payment= new payment;
 

@@ -7,10 +7,6 @@ class payment
     {
         $file = 'horario.txt';
         if (is_file($file)) {
-
-            $week = ['MO', 'TU', 'WE', 'TH', 'FR'];
-            $weekend = ['SA', 'SU'];
-
             if (($fp = fopen($file, "r")) !== FALSE) {
 
                 while (($data = fgets($fp, 4096)) !== FALSE) {
@@ -32,36 +28,37 @@ class payment
 
                         for ($i = 1; $i <= $numHours; $i++) {
                             $time = $hours[0] + $i;
-                
-                            $amount += $this -> getAmount($time,$value, $weekend );
-                        }
 
+                            $amount += $this->getAmount($time, $value);
+                            
+                        }
                     }
 
-                    print_r('The amount to pay to ' . $schedule[0] . ' is ' . $amount . ' USD | ', false);
+                    print_r('The amount to pay to ' . $schedule[0] . ' is ' . $amount . ' USD |  ', false);
                 }
             }
         } else
             echo 'This is not a file';
     }
 
-    function getAmount($time,$value, $weekend )
+    function getAmount($time, $value)
     {
-         $amount = 0;
+        $weekend = ['SA', 'SU'];
+        $amount = 0;
 
-            if ($time >= '00:01' && $time <= '09:00') {
-                $amount +=  25;
-            } else if ($time >= '09:01' && $time <= '18:00') {
-                $amount += 15;
-            } else if ($time >= '18:01' && $time <= '24:00') {
-                $amount += 20;
-            }
+        if ($time >= '00:01' && $time <= '09:00') {
+            $amount +=  25;
+        } else if ($time >= '09:01' && $time <= '18:00') {
+            $amount += 15;
+        } else if ($time >= '18:01' && $time <= '24:00') {
+            $amount += 20;
+        }
 
 
-            if (in_array(substr($value, 0, 2), $weekend)) {
-                $amount += 5;
-            }
-        
+        if (in_array(substr($value, 0, 2), $weekend)) {
+            $amount += 5;
+        }
+
 
         return $amount;
     }
